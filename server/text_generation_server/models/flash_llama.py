@@ -2,8 +2,8 @@ import torch
 import torch.distributed
 
 from opentelemetry import trace
-from transformers import AutoConfig
-from transformers.models.llama import LlamaTokenizer, LlamaTokenizerFast
+from transformers import AutoConfig, AutoTokenizer
+from transformers.models.llama import LlamaTokenizerFast
 from typing import Optional
 
 from text_generation_server.models import FlashCausalLM
@@ -36,7 +36,7 @@ class FlashLlama(FlashCausalLM):
             raise NotImplementedError("FlashLlama is only available on GPU")
 
         try:
-            tokenizer = LlamaTokenizer.from_pretrained(
+            tokenizer = AutoTokenizer.from_pretrained(
                 model_id,
                 revision=revision,
                 padding_side="left",
